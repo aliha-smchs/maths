@@ -317,7 +317,7 @@ def show():
     st.dataframe(year_comparison_data.style.applymap(color_comparison, subset=['Comparison']))
 
     with pd.ExcelWriter('styled_dataframe.xlsx', engine='openpyxl') as writer:
-        comparison_data.style.applymap(color_comparison, subset=['Comparison']).to_excel(writer, index=False)
+        year_comparison_data.style.applymap(color_comparison, subset=['Comparison']).to_excel(writer, index=False)
 
     # Provide a download link for the Excel file
     with open('styled_dataframe.xlsx', 'rb') as f:

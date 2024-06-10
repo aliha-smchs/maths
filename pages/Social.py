@@ -5,13 +5,13 @@ import os
 
 # Set page Title
 def show():
-    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS MORAL EDUCATION (2023 JUNE - 2024 JUNE).</h1></br>"""
+    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS SOCIAL STUDIES (2023 JUNE - 2024 JUNE).</h1></br>"""
     # You can add more Streamlit elements below
     st.markdown(html_header, unsafe_allow_html=True)
 
     # Load data files
-    file_2023 = "data/MoralEdu2023.csv"
-    file_2024 = "data/MoralEdu2023.csv"
+    file_2023 = "data/Social2023.csv"
+    file_2024 = "data/Social2024.csv"
 
     @st.cache_data
     def load_data(file):
@@ -30,119 +30,92 @@ def show():
 
     # Sidebar for customization
     st.sidebar.title("Subject")
-    subject = "MoralEdu"
+    subject = "Social Studies"
     st.sidebar.subheader(subject)
     year_group = st.sidebar.selectbox("Select Year Group",
                                       ['Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-                                       'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'])
+                                       'Year 9', 'Year 10'])
 
     # Check if the selected subject exists in the grade boundaries for the selected year group
 
     # Fixed grade boundaries for 2023 for each subject and year group
     grade_boundaries_2023 = {
 
-        'Year 2': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
-        },
         'Year 3': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 4': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 5': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 6': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 7': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 8': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 9': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
         'Year 10': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Social Studies': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
         },
-        'Year 11': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
-        },
-        'Year 12': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        'Year 13': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
-
-        },
         # Add more years as needed
     }
 
     # Default grade boundaries for 2024 (customizable)
     grade_boundaries_2024 = {
 
-        'Year 2': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
-        },
         'Year 3': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 4': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 5': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 6': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 7': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 8': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 9': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         'Year 10': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Social Studies': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
-        'Year 11': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
-        },
-        'Year 12': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
-        },
-        'Year 13': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
-
-        },
         # Add more years as needed
     }
 
@@ -241,17 +214,14 @@ def show():
 
     year_groups_1_to_6 = ['Year 3', 'Year 4', 'Year 5', 'Year 6']
     year_groups_7_to_11 = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11']
-    year_groups_12_to_13 = ['Year 12', 'Year 13']
 
     above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6 = calculate_group_percentages(
         comparison_data, year_groups_1_to_6)
     above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11 = calculate_group_percentages(
         comparison_data, year_groups_7_to_11)
-    above_percentage_12_to_13, expected_percentage_12_to_13, below_percentage_12_to_13 = calculate_group_percentages(
-        comparison_data, year_groups_12_to_13)
 
     # Display results
-    st.subheader("Student's Progress (June 2023 - June 2024) in Moral Education")
+    st.subheader("Student's Progress (June 2023 - June 2024) in Social Studies")
 
     def display_comparison_results(g_above_percentage, g_expected_percentage, g_below_percentage, year_range):
         Above_Expected = g_above_percentage + g_expected_percentage
@@ -292,8 +262,7 @@ def show():
     display_comparison_results(above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6, "Primary")
     display_comparison_results(above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11,
                                "Secondary")
-    display_comparison_results(above_percentage_12_to_13, expected_percentage_12_to_13, below_percentage_12_to_13,
-                               "POST 16")
+
 
     # Display data
 
