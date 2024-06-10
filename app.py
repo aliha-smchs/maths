@@ -2,7 +2,9 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 # Import all your page scripts
 
-from pages import Math, Science,MoralEdu,Social,English
+from pages import (Math, Science,
+                   MoralEdu, Social,
+                   English, ArabicA, ArabicB)
 
 st.set_page_config(layout="wide", page_title="Student Progress Analysis")
 
@@ -58,7 +60,9 @@ PAGES = {
     "Science": Science,
     "MoralEdu": MoralEdu,
     "Social": Social,
-    "English": English,
+    "English Language": English,
+    "Arabic Arab": ArabicA,
+    "Arabic (Non-A)": ArabicB,
 }
 
 

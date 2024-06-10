@@ -3,17 +3,15 @@ import pandas as pd
 import os
 
 
-
 # Set page Title
-
 def show():
-    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS ENGLISH (2023 JUNE - 2024 JUNE).</h1></br>"""
+    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS ARABIC (Non-A) (2023 JUNE - 2024 JUNE).</h1></br>"""
     # You can add more Streamlit elements below
     st.markdown(html_header, unsafe_allow_html=True)
 
     # Load data files
-    file_2023 = "data/EngLan2023.csv"
-    file_2024 = "data/EngLan2024.csv"
+    file_2023 = "data/ArabicB2023.csv"
+    file_2024 = "data/ArabicB2024.csv"
 
     @st.cache_data
     def load_data(file):
@@ -23,7 +21,6 @@ def show():
     # Load data
     data_2023 = load_data(file_2023)
     data_2024 = load_data(file_2024)
-
     # Ensure subject selection matches columns in both datasets
     common_subjects = list(set(data_2023.columns[2:]).intersection(set(data_2024.columns[2:])))
     common_subjects.sort()
@@ -31,20 +28,13 @@ def show():
         st.error("No common subjects found in the provided data files.")
         st.stop()
 
-    # # Sidebar for customization
-    # st.sidebar.title("Settings")
-    # subject = st.sidebar.selectbox("Select Subject", common_subjects,index=5)
-    # year_group = st.sidebar.selectbox("Select Year Group",
-    #                                   ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-    #                                    'Year 9', 'Year 10', 'Year 11', 'Year 12',  'Year 13'])
-
     # Sidebar for customization
     st.sidebar.title("Subject")
-    subject = "English"
+    subject = "Arabic"
     st.sidebar.subheader(subject)
     year_group = st.sidebar.selectbox("Select Year Group",
                                       ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-                                       'Year 9', 'Year 10', 'Year 11'])
+                                       'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'])
 
     # Check if the selected subject exists in the grade boundaries for the selected year group
 
@@ -52,46 +42,53 @@ def show():
     grade_boundaries_2023 = {
 
         'Year 2': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 3': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 4': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 5': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 6': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 7': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 8': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 9': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 10': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 11': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
+        'Year 12': {
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
+        },
+        'Year 13': {
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
+
+        },
         # Add more years as needed
     }
 
@@ -99,43 +96,51 @@ def show():
     grade_boundaries_2024 = {
 
         'Year 2': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 3': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 4': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 5': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 6': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 7': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 8': {
-            'English': {'A*': 84, 'A': 73, 'B': 59, 'C': 48, 'D': 35, 'E': 29, 'F': 20, 'G': 10, 'U': 0},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 9': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 10': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
         'Year 11': {
-            'English': {'9': 84, '8': 78, '7': 73, '6': 64, '5': 56, '4': 48, '3': 35, '2': 22, '1': 10},
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
+
+        },
+        'Year 12': {
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
+
+        },
+        'Year 13': {
+            'Arabic': {'A*': 78, 'A': 65, 'B': 55, 'C': 44, 'D': 33, 'E': 23, 'U': 0},
 
         },
 
@@ -244,8 +249,9 @@ def show():
     above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11 = calculate_group_percentages(
         comparison_data, year_groups_7_to_11)
 
+
     # Display results
-    st.subheader("Student's Progress (June 2023 - June 2024) in English")
+    st.subheader("Student's Progress (June 2023 - June 2024) in Arabic (Non-A)")
 
     def display_comparison_results(g_above_percentage, g_expected_percentage, g_below_percentage, year_range):
         Above_Expected = g_above_percentage + g_expected_percentage
@@ -287,6 +293,7 @@ def show():
     display_comparison_results(above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11,
                                "Secondary")
 
+
     # Display data
 
     # Highlight comparison results
@@ -304,7 +311,7 @@ def show():
 
     year_comparison_data = comparison_data[comparison_data['Year'] == year_group]
 
-    st.subheader(f"Grades Comparison for (2023 June and 2024 June in English {year_group}")
+    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Arabic Non-A {year_group}")
     st.markdown("</br>", unsafe_allow_html=True)
     st.dataframe(year_comparison_data.style.applymap(color_comparison, subset=['Comparison']))
 
@@ -351,13 +358,13 @@ def show():
     elif 75 > above_percentage >= 61 and Above_Expected >= 75:
         results = "VERY GOOD"
         result_colors = "darkgreen"
-    elif 61 > above_percentage >= 50 and Above_Expected >= 75:
+    elif 60 > above_percentage >= 50 and Above_Expected >= 75:
         results = "GOOD"
         result_colors = "green"
     elif 51 >= above_percentage >= 1 and Above_Expected >= 75:
         results = "ACCEPTABLE"
         result_colors = "yellow"
-    elif 60 >= above_percentage >= 15 and Above_Expected < 75:
+    elif 65 >= above_percentage >= 15 and Above_Expected < 75:
         results = "WEAK"
         result_colors = "lightpink"
     elif above_percentage < 15 and Above_Expected < 75:

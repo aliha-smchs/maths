@@ -328,13 +328,13 @@ def show():
     elif 75 > above_percentage >= 61 and Above_Expected >= 75:
         results = "VERY GOOD"
         result_colors = "darkgreen"
-    elif 61 > above_percentage >= 50 and Above_Expected >= 75:
+    elif 60 > above_percentage >= 50 and Above_Expected >= 75:
         results = "GOOD"
         result_colors = "green"
     elif 51 >= above_percentage >= 1 and Above_Expected >= 75:
         results = "ACCEPTABLE"
         result_colors = "yellow"
-    elif 60 >= above_percentage >= 15 and Above_Expected < 75:
+    elif 65 >= above_percentage >= 15 and Above_Expected < 75:
         results = "WEAK"
         result_colors = "lightpink"
     elif above_percentage < 15 and Above_Expected < 75:
