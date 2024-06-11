@@ -243,21 +243,6 @@ def show():
             color = 'grey'
         return f'background-color: {color}'
 
-    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Mathematics {year_group}")
-    st.markdown("</br>", unsafe_allow_html=True)
-    st.dataframe(comparison_data.style.applymap(color_comparison, subset=['Comparison']))
-
-    with pd.ExcelWriter('styled_dataframe.xlsx', engine='openpyxl') as writer:
-        comparison_data.style.applymap(color_comparison, subset=['Comparison']).to_excel(writer, index=False)
-
-    # Provide a download link for the Excel file
-    with open('styled_dataframe.xlsx', 'rb') as f:
-        st.download_button(
-            label="Download Data as Excel",
-            data=f,
-            file_name='styled_dataframe.xlsx',
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
 
     year_comparison_data = comparison_data[comparison_data['Year'] == year_group]
 
