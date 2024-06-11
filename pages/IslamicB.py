@@ -1,19 +1,17 @@
 import streamlit as st
 import pandas as pd
 import os
-
-from pages import MoralEduall
-
+from pages import IslamicBall
 
 # Set page Title
 def show():
-    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS MORAL EDUCATION (2023 JUNE - 2024 JUNE).</h1></br>"""
+    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS ISLAMIC (Non-Arab) (2023 JUNE - 2024 JUNE).</h1></br>"""
     # You can add more Streamlit elements below
     st.markdown(html_header, unsafe_allow_html=True)
 
     # Load data files
-    file_2023 = "data/MoralEdu2023.csv"
-    file_2024 = "data/MoralEdu2024.csv"
+    file_2023 = "data/IslamicB2023.csv"
+    file_2024 = "data/IslamicB2024.csv"
 
     @st.cache_data
     def load_data(file):
@@ -32,7 +30,7 @@ def show():
 
     # Sidebar for customization
     st.sidebar.title("Subject")
-    subject = "MoralEdu"
+    subject = "Islamic"
     st.sidebar.subheader(subject)
     year_group = st.sidebar.selectbox("Select Year Group",
                                       ['Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
@@ -44,51 +42,51 @@ def show():
     grade_boundaries_2023 = {
 
         'Year 2': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 3': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 4': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 5': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 6': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 7': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 8': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 9': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 10': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 11': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 12': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 80, 'A': 70, 'B': 60, 'C': 50, 'D': 40, 'U': 0},
 
         },
         'Year 13': {
-            'MoralEdu': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+            'Islamic': {'A*': 80, 'A': 70, 'B': 60, 'C': 50, 'D': 40, 'U': 0},
 
         },
         # Add more years as needed
@@ -98,51 +96,55 @@ def show():
     grade_boundaries_2024 = {
 
         'Year 2': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 3': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 4': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 5': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 6': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 7': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 8': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 40, 'U': 0},
 
         },
         'Year 9': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 10': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 11': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'9': 90, '8': 80, '7': 70, '6': 60, '5': 50, '4': 45, '3': 40, '2': 0},
 
         },
         'Year 12': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 80, 'A': 70, 'B': 60, 'C': 50, 'D': 40, 'U': 0},
 
         },
         'Year 13': {
-            'MoralEdu': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
+            'Islamic': {'A*': 80, 'A': 70, 'B': 60, 'C': 50, 'D': 40, 'U': 0},
+
+        },
+        'Year 13': {
+            'Islamic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 35, 'U': 0},
 
         },
         # Add more years as needed
@@ -225,8 +227,8 @@ def show():
     comparison_data['Comparison'] = comparison_data.apply(
         lambda row: compare_grades(row['Grade_2023'], row['Grade_2024']),
         axis=1)
-    st.subheader("Student's Progress (June 2023 - June 2024) in Moral Education")
-    MoralEduall.alldata()
+    st.subheader("Student's Progress (June 2023 - June 2024) in Islamic (Non-Arab)")
+    IslamicBall.alldata()
     # Display data
 
     # Highlight comparison results
@@ -245,7 +247,7 @@ def show():
 
     year_comparison_data = comparison_data[comparison_data['Year'] == year_group]
 
-    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Moral Education {year_group}")
+    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Islamic (Non-Arab) {year_group}")
     st.markdown("</br>", unsafe_allow_html=True)
     st.dataframe(year_comparison_data.style.applymap(color_comparison, subset=['Comparison']))
 

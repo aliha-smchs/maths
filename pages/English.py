@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
-
+from pages import Englishall
 
 
 # Set page Title
@@ -219,74 +219,8 @@ def show():
     comparison_data['Comparison'] = comparison_data.apply(
         lambda row: compare_grades(row['Grade_2023'], row['Grade_2024']),
         axis=1)
-
-    def calculate_group_percentages(data, year_groups):
-        grouped_data = data[data['Year'].isin(year_groups)]
-        comparison_counts = grouped_data['Comparison'].value_counts()
-        filter_data = grouped_data[grouped_data['Comparison'] != 'N/A']
-        total_comparisons = len(filter_data)
-        above_count = comparison_counts.get('Above', 0)
-        expected_count = comparison_counts.get('Expected', 0)
-        below_count = comparison_counts.get('Below', 0)
-
-        above_percentage = (above_count / total_comparisons) * 100
-        expected_percentage = (expected_count / total_comparisons) * 100
-        below_percentage = (below_count / total_comparisons) * 100
-
-        return above_percentage, expected_percentage, below_percentage
-
-    year_groups_1_to_6 = ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6']
-    year_groups_7_to_11 = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11']
-
-
-    above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6 = calculate_group_percentages(
-        comparison_data, year_groups_1_to_6)
-    above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11 = calculate_group_percentages(
-        comparison_data, year_groups_7_to_11)
-
-    # Display results
     st.subheader("Student's Progress (June 2023 - June 2024) in English")
-
-    def display_comparison_results(g_above_percentage, g_expected_percentage, g_below_percentage, year_range):
-        Above_Expected = g_above_percentage + g_expected_percentage
-        result = ""
-        result_color = ""
-        text_color = "black"
-        if g_above_percentage >= 75 and Above_Expected >= 75:
-            result = "OUTSTANDING"
-            result_color = "royalblue"
-        elif 75 > g_above_percentage >= 61 and Above_Expected >= 75:
-            result = "VERY GOOD"
-            result_color = "darkgreen"
-        elif 61 > g_above_percentage >= 50 and Above_Expected >= 75:
-            result = "GOOD"
-            result_color = "green"
-        elif 51 >= g_above_percentage >= 1 and Above_Expected >= 75:
-            result = "ACCEPTABLE"
-            result_color = "yellow"
-        elif 60 >= g_above_percentage >= 15 and Above_Expected < 75:
-            result = "WEAK"
-            result_color = "lightpink"
-        elif g_above_percentage < 15 and Above_Expected < 75:
-            result = "VERY WEAK"
-            result_color = "magenta"
-        html_group = f"""
-            <table style='width:25%; font-size:20px;margin-left: auto;margin-right: auto;'>
-            <tr>
-            <th 
-            style='width:150px;background-color:lightblue;color:black;border:1px solid black;'>{year_range}</td>
-            <th 
-            style='width:150px;background-color:{result_color};color:{text_color};border:1px solid black;'>{result}</td>
-            </tr>
-
-            """
-
-        st.markdown(f"{html_group}</table>", unsafe_allow_html=True)
-
-    display_comparison_results(above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6, "Primary")
-    display_comparison_results(above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11,
-                               "Secondary")
-
+    Englishall.alldata()
     # Display data
 
     # Highlight comparison results
@@ -301,6 +235,22 @@ def show():
         elif val == 'N/A':
             color = 'grey'
         return f'background-color: {color}'
+
+    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Mathematics {year_group}")
+    st.markdown("</br>", unsafe_allow_html=True)
+    st.dataframe(comparison_data.style.applymap(color_comparison, subset=['Comparison']))
+
+    with pd.ExcelWriter('styled_dataframe.xlsx', engine='openpyxl') as writer:
+        comparison_data.style.applymap(color_comparison, subset=['Comparison']).to_excel(writer, index=False)
+
+    # Provide a download link for the Excel file
+    with open('styled_dataframe.xlsx', 'rb') as f:
+        st.download_button(
+            label="Download Data as Excel",
+            data=f,
+            file_name='styled_dataframe.xlsx',
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
 
     year_comparison_data = comparison_data[comparison_data['Year'] == year_group]
 
