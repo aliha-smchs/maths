@@ -13,328 +13,160 @@ def show():
     st.markdown(html_header, unsafe_allow_html=True)
 
     # Load data files
-    file_2023 = "data/Math2023.csv"
-    file_2024 = "data/Math2024.csv"
+    # Load the data
+    file_2023 = 'data/Math2023.csv'
+    file_2024 = 'data/Math2024OLD.csv'
 
-    @st.cache_data
-    def load_data(file):
-        data = pd.read_csv(file)
-        return data
-
-    # Load data
-    data_2023 = load_data(file_2023)
-    data_2024 = load_data(file_2024)
-
-    # Ensure subject selection matches columns in both datasets
-    common_subjects = list(set(data_2023.columns[2:]).intersection(set(data_2024.columns[2:])))
-    common_subjects.sort()
-    if not common_subjects:
-        st.error("No common subjects found in the provided data files.")
-        st.stop()
-
-    # # Sidebar for customization
-    # st.sidebar.title("Settings")
-    # subject = st.sidebar.selectbox("Select Subject", common_subjects,index=5)
-    # year_group = st.sidebar.selectbox("Select Year Group",
-    #                                   ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-    #                                    'Year 9', 'Year 10', 'Year 11', 'Year 12',  'Year 13'])
-
-    # Sidebar for customization
-    st.sidebar.title("Subject")
-    subject = "Mathematic"
-    st.sidebar.subheader(subject)
-    year_group = st.sidebar.selectbox("Select Year Group",
-                                      ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-                                       'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'])
-
-    # Check if the selected subject exists in the grade boundaries for the selected year group
-
-    # Fixed grade boundaries for 2023 for each subject and year group
+    # Read the CSV files
+    data_2023 = pd.read_csv(file_2023)
+    data_2024 = pd.read_csv(file_2024)
     grade_boundaries_2023 = {
+        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
-        'Year 2': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
 
-        },
-        'Year 3': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 4': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 5': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 6': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 7': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 8': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 9': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 10': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 11': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 12': {
-            'Mathematic': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        'Year 13': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 55, 'C': 48, 'D': 45, 'E': 35, 'U': 0},
-
-        },
-        # Add more years as needed
     }
 
-    # Default grade boundaries for 2024 (customizable)
     grade_boundaries_2024 = {
+        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
+        'Year 13': {'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
-        'Year 2': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 3': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 4': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 5': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 6': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 7': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 8': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 9': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 10': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 11': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 12': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        'Year 13': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        # Add more years as needed
     }
 
-    if subject not in grade_boundaries_2023[year_group] or subject not in grade_boundaries_2024[year_group]:
-        st.error(f"The subject {subject} is not available in {year_group}.")
-        st.stop()
-    # Allow customization of grade boundaries for 2024 only
-    # Display grade boundaries for 2023
-    st.sidebar.subheader("Grade Boundaries for 2023")
-    boundaries_2023 = grade_boundaries_2023[year_group][subject]
-    for grade, boundary in boundaries_2023.items():
-        st.sidebar.text(f"Boundary for {grade}: {boundary}")
+    # Function to apply the grade boundaries to the data
+    def apply_grade_boundaries(year, subject, marks, grade_boundaries):
+        boundaries = grade_boundaries.get(year, {}).get(subject, {})
+        for grade, threshold in boundaries.items():
+            if marks >= threshold:
+                return grade
+        return 'U' if pd.notna(marks) else 'N/A'
 
-    # Display grade boundaries for 2024
-    st.sidebar.subheader("Grade Boundaries for 2024")
-    boundaries_2024 = grade_boundaries_2024[year_group][subject]
-    for grade, boundary in boundaries_2024.items():
-        st.sidebar.text(f"Boundary for {grade}: {boundary}")
+    # Apply the custom grade boundaries to both datasets
+    data_2023['Grade'] = data_2023.apply(
+        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2023), axis=1)
+    data_2024['Grade'] = data_2024.apply(
+        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2024), axis=1)
 
-    # Convert marks to grades based on defined boundaries
-    def convert_to_grades(data, boundaries):
-        grades = []
-        for mark in data:
-            try:
-                mark = int(mark)
-                if pd.isna(mark) or not mark:
-                    grades.append('N/A')  # Handle missing or invalid marks
-                else:
-                    for grade, boundary in boundaries.items():
-                        if mark >= boundary:
-                            grades.append(grade)
-                            break
-            except ValueError:
-                grades.append('N/A')  # Handle non-numeric marks
-        return grades
-
-    # Filter and process data
-    data_2023_filtered = data_2023[['Student', 'Year', subject]].copy()
-    data_2024_filtered = data_2024[['Student', 'Year', subject]].copy()
-
-    # Clean and convert marks to numeric values and coerce errors to NaN
-    data_2023_filtered[subject] = pd.to_numeric(
-        data_2023_filtered[subject].apply(lambda x: x.strip() if isinstance(x, str) else x), errors='coerce').fillna(
-        0).astype(int)
-    data_2024_filtered[subject] = pd.to_numeric(
-        data_2024_filtered[subject].apply(lambda x: x.strip() if isinstance(x, str) else x), errors='coerce').fillna(
-        0).astype(int)
-
-    data_2023_filtered['Grade'] = convert_to_grades(data_2023_filtered[subject],
-                                                    grade_boundaries_2023[year_group][subject])
-    data_2024_filtered['Grade'] = convert_to_grades(data_2024_filtered[subject], boundaries_2024)
-
-    # Merge data for comparison
-    comparison_data = pd.merge(data_2023_filtered, data_2024_filtered, on=['Student', 'Year'],
-                               suffixes=('_2023', '_2024'))
-
-    grade_to_value = {'A*': 8, 'A': 7, 'B': 6, 'C': 5, 'D': 4, 'E': 3, 'F': 2, 'G': 1, 'U': 0, '9': 9, '8': 8, '7': 7,
-                      '6': 6,
-                      '5': 5, '4': 4, '3': 3, '2': 2, '1': 1, '0': 0, 'N/A': 'N/A'}
-
-    # Comparison result
+    # Define a function to compare grades and add the appropriate label
     def compare_grades(grade_2023, grade_2024):
+        grade_order = ['U', '2', '3', '4', '5', '6', '7', '8', '9', 'F', 'E', 'D', 'C', 'B', 'A', 'A*']
 
-        if grade_to_value[grade_2023] == 'N/A' or grade_to_value[grade_2024] == 'N/A':
+        if grade_2023 == 'N/A' or grade_2024 == 'N/A':
             return 'N/A'
 
-        elif grade_to_value[grade_2023] < grade_to_value[grade_2024]:
+        index_2023 = grade_order.index(grade_2023)
+        index_2024 = grade_order.index(grade_2024)
+        if index_2024 > index_2023:
             return 'Above'
-
-        elif grade_to_value[grade_2023] == grade_to_value[grade_2024]:
-            if grade_2023 == 'A*' and grade_2024 == 'A*' or grade_2023 == '9' and grade_2024 == '9':
-                return 'Above'
-            else:
-                return 'Expected'
+        elif index_2024 == 15 and index_2023 == 15:
+            return 'Above'
+        elif index_2024 == index_2023:
+            return 'Expected'
         else:
             return 'Below'
 
-    comparison_data['Comparison'] = comparison_data.apply(
-        lambda row: compare_grades(row['Grade_2023'], row['Grade_2024']),
-        axis=1)
+    # Add a comparison column to the dataframes
+    comparison_results = []
+
+    for i, row in data_2023.iterrows():
+        student_2023 = row['Student']
+        grade_2023 = row['Grade']
+        student_row_2024 = data_2024[data_2024['Student'] == student_2023]
+        if not student_row_2024.empty:
+            grade_2024 = student_row_2024.iloc[0]['Grade']
+            comparison = compare_grades(grade_2023, grade_2024)
+        else:
+            comparison = 'N/A'
+        comparison_results.append({
+            'Student': student_2023,
+            'Grade 2023': grade_2023,
+            'Grade 2024': grade_2024 if not student_row_2024.empty else 'N/A',
+            'Comparison': comparison
+        })
+
+    comparison_df = pd.DataFrame(comparison_results).copy()
+    comparison_df['Year Group'] = data_2023['Year']
+    # Calculate the percentage of Above, Expected, and Below comparisons
 
 
+    # Calculate the percentage of Above, Expected, and Below comparisons for each year group
+
+    comparison_counts_excluding_na = comparison_df[comparison_df['Comparison'] != 'N/A'].groupby(
+        ['Year Group', 'Comparison']).size().unstack(fill_value=0)
+    comparison_counts_excluding_na = comparison_counts_excluding_na.div(comparison_counts_excluding_na.sum(axis=1),
+                                                                            axis=0) * 100
+    comparison_counts_excluding_na.__round__(0)
+
+
+    def determine_result(row):
+        above = row['Above']
+        expected = row['Expected']
+
+        if above >= 74.5 and (above + expected) >= 75:
+            return 'OUTSTANDING'
+        elif above < 75 and above > 60 and (above + expected) >= 74.5:
+            return 'VeryGOOD'
+        elif above < 61 and above > 50 and (above + expected) >= 74.5:
+            return 'GOOD'
+        elif above < 51 and above > 16 and (above + expected) >= 74.5:
+            return 'Acceptable'
+        elif above < 65 and above > 16 and (above + expected) < 74.5:
+            return 'Weak'
+        elif above < 16 and above > 0 and (above + expected) < 74.5:
+            return 'VeryWeak'
+        else:
+            return 'N/A'
+
+    # Apply the function to the dataframe
+    comparison_counts_excluding_na['Result'] = comparison_counts_excluding_na.apply(determine_result, axis=1)
+
+    # Display the comparison results
 
     # Display All Data
     Mathall.alldata()
 
     # Highlight comparison results
-    def color_comparison(val):
-        color = 'black'
-        if val == 'Above':
-            color = 'green'
-        elif val == 'Expected':
-            color = 'yellow'
-        elif val == 'Below':
-            color = 'red'
-        elif val == 'N/A':
-            color = 'grey'
-        return f'background-color: {color}'
 
-
-
-    year_comparison_data = comparison_data[comparison_data['Year'] == year_group]
-
-    st.subheader(f"Grades Comparison for (2023 June and 2024 June in Mathematics {year_group}")
-    st.markdown("</br>", unsafe_allow_html=True)
-    st.dataframe(year_comparison_data.style.applymap(color_comparison, subset=['Comparison']))
-
-    with pd.ExcelWriter('styled_dataframe.xlsx', engine='openpyxl') as writer:
-        year_comparison_data.style.applymap(color_comparison, subset=['Comparison']).to_excel(writer, index=False)
-
-    # Provide a download link for the Excel file
-    with open('styled_dataframe.xlsx', 'rb') as f:
-        st.download_button(
-            label="Download Data as Excel",
-            data=f,
-            file_name='styled_dataframe.xlsx',
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-
-    # Remove the temporary file
-    os.remove('styled_dataframe.xlsx')
-
-    # Bar Graph for Comparison
-    comparison_counts = year_comparison_data['Comparison'].value_counts()
-
-    # Calculate percentages for Above, Expected, and Below
-    filter_data = year_comparison_data[year_comparison_data['Comparison'] != 'N/A']
-    total_comparisons = len(filter_data)
-    above_count = comparison_counts.get('Above', 0)
-    expected_count = comparison_counts.get('Expected', 0)
-    below_count = comparison_counts.get('Below', 0)
-
-    above_percentage = (above_count / total_comparisons) * 100
-    expected_percentage = (expected_count / total_comparisons) * 100
-    below_percentage = (below_count / total_comparisons) * 100
-    Progress_Evaluation = above_percentage + expected_percentage
-    results = ""
-    result_colors = ""
-    text_colors = "black"
-    Above_Expected = above_percentage + expected_percentage
-
-    st.subheader(f"Comparison Results for {year_group}")
-
-    # Define the HTML string for the table
-    if above_percentage >= 75 and Above_Expected >= 75:
-        results = "OUTSTANDING"
-        result_colors = "royalblue"
-    elif 75 > above_percentage >= 61 and Above_Expected >= 75:
-        results = "VERY GOOD"
-        result_colors = "darkgreen"
-    elif 61 > above_percentage >= 50 and Above_Expected >= 75:
-        results = "GOOD"
-        result_colors = "green"
-    elif 51 >= above_percentage >= 1 and Above_Expected >= 75:
-        results = "ACCEPTABLE"
-        result_colors = "yellow"
-    elif 60 >= above_percentage >= 15 and Above_Expected < 75:
-        results = "WEAK"
-        result_colors = "lightpink"
-    elif above_percentage < 15 and Above_Expected < 75:
-        results = "VERY WEAK"
-        result_colors = "magenta"
-    html_table = f"""
-    <table style='width:100%; font-size:20px; '>
-      <tr>
-        <th style='background-color:green;color:white;border:1px solid black;'>Above</th>
-        <th style='background-color:yellow;color:black;border:1px solid black;'>Expected</th> 
-        <th style='background-color:red;color:white;border:1px solid black;'>Below</th>
-      </tr>
-      <tr>
-        <td style='background-color:green;color:white;border:1px solid black;'>{above_percentage:.2f}%</td>
-        <td style='background-color:yellow;color:black;border:1px solid black;'>{expected_percentage:.2f}%</td> 
-        <td style='background-color:red;color:white;border:1px solid black;'>{below_percentage:.2f}%</td>
-      </tr>
-        <tr>
-            <th colspan='3' style='background-color:{result_colors};color:{text_colors};
-            border:1px solid black;text-align: center;'>{results}</td>
-      </tr>
-    </table>
-    """
-
-    # Inject the HTML string into the Streamlit app
-    st.markdown(html_table, unsafe_allow_html=True)
-    # Inject the HTML string into the Streamlit app
+    # html_table = f"""
+    # <table style='width:100%; font-size:20px; '>
+    #   <tr>
+    #     <th style='background-color:green;color:white;border:1px solid black;'>Above</th>
+    #     <th style='background-color:yellow;color:black;border:1px solid black;'>Expected</th>
+    #     <th style='background-color:red;color:white;border:1px solid black;'>Below</th>
+    #   </tr>
+    #   <tr>
+    #     <td style='background-color:green;color:white;border:1px solid black;'>{above_percentage:.2f}%</td>
+    #     <td style='background-color:yellow;color:black;border:1px solid black;'>{expected_percentage:.2f}%</td>
+    #     <td style='background-color:red;color:white;border:1px solid black;'>{below_percentage:.2f}%</td>
+    #   </tr>
+    #     <tr>
+    #         <th colspan='3' style='background-color:{result_colors};color:{text_colors};
+    #         border:1px solid black;text-align: center;'>{results}</td>
+    #   </tr>
+    # </table>
+    # """
+    #
+    # # Inject the HTML string into the Streamlit app
+    # st.markdown(html_table, unsafe_allow_html=True)
+    # # Inject the HTML string into the Streamlit app
+    to_html = comparison_counts_excluding_na.to_html()
+    st.markdown(to_html, unsafe_allow_html=True)

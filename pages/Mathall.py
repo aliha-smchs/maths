@@ -6,277 +6,174 @@ import pandas as pd
 # Set page Title
 
 def alldata():
-    file_2023 = "data/Math2023.csv"
-    file_2024 = "data/Math2024.csv"
+    # Load the data
+    file_2023 = 'data/Math2023.csv'
+    file_2024 = 'data/Math2024OLD.csv'
 
-    @st.cache_data
-    def load_data_all(file):
-        data = pd.read_csv(file)
-        return data
-
-    # Load data
-    data_2023_all = load_data_all(file_2023)
-    data_2024_all = load_data_all(file_2024)
-
-    # Ensure subject selection matches columns in both datasets
-    common_subjects_all = list(set(data_2023_all.columns[2:]).intersection(set(data_2024_all.columns[2:])))
-    common_subjects_all.sort()
-    if not common_subjects_all:
-        st.error("No common subjects found in the provided data files.")
-        st.stop()
-
-    # # Sidebar for customization
-    # st.sidebar.title("Settings")
-    # subject = st.sidebar.selectbox("Select Subject", common_subjects,index=5)
-    # year_group = st.sidebar.selectbox("Select Year Group",
-    #                                   ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-    #                                    'Year 9', 'Year 10', 'Year 11', 'Year 12',  'Year 13'])
-
-    # Sidebar for customization
-    subjects_all = "Mathematic"
-    year_group = ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8',
-                                       'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13']
-
-    # Check if the selected subject exists in the grade boundaries for the selected year group
-
-    # Fixed grade boundaries for 2023 for each subject and year group
+    # Read the CSV files
+    data_2023 = pd.read_csv(file_2023)
+    data_2024 = pd.read_csv(file_2024)
     grade_boundaries_2023 = {
+        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
-        'Year 2': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 3': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 4': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 5': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 6': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 7': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 8': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 9': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 10': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 11': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 12': {
-            'Mathematic': {'A*': 90, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        'Year 13': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 55, 'C': 48, 'D': 45, 'E': 35, 'U': 0},
-
-        },
-        # Add more years as needed
     }
 
-    # Default grade boundaries for 2024 (customizable)
     grade_boundaries_2024 = {
+        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
+        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
+        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
+        'Year 13': {'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
-        'Year 2': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 3': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 4': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 5': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 6': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 7': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 8': {
-            'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0},
-
-        },
-        'Year 9': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 10': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 11': {
-            'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0},
-
-        },
-        'Year 12': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        'Year 13': {
-            'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0},
-
-        },
-        # Add more years as needed
     }
+    # Function to apply the grade boundaries to the data
+    def apply_grade_boundaries(year, subject, marks, grade_boundaries):
+        boundaries = grade_boundaries.get(year, {}).get(subject, {})
+        for grade, threshold in boundaries.items():
+            if marks >= threshold:
+                return grade
+        return 'U' if pd.notna(marks) else 'N/A'
 
-    def convert_to_grades(data, boundaries):
-        grades = []
-        for mark in data:
-            try:
-                mark = int(mark)
-                if pd.isna(mark) or not mark:
-                    grades.append('N/A')  # Handle missing or invalid marks
-                else:
-                    for grade, boundary in boundaries.items():
-                        if mark >= boundary:
-                            grades.append(grade)
-                            break
-            except ValueError:
-                grades.append('N/A')  # Handle non-numeric marks
-        return grades
+    # Apply the custom grade boundaries to both datasets
+    data_2023['Grade'] = data_2023.apply(
+        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2023), axis=1)
+    data_2024['Grade'] = data_2024.apply(
+        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2024), axis=1)
 
-    # Filter and process data
-    data_2023_filtered_all = data_2023_all[['Student', 'Year', subjects_all]].copy()
-    data_2024_filtered_all = data_2024_all[['Student', 'Year', subjects_all]].copy()
-
-    # Clean and convert marks to numeric values and coerce errors to NaN
-    data_2023_filtered_all[subjects_all] = pd.to_numeric(
-        data_2023_filtered_all[subjects_all].apply(lambda x: x.strip() if isinstance(x, str) else x), errors='coerce').fillna(
-        0).astype(int)
-    data_2024_filtered_all[subjects_all] = pd.to_numeric(
-        data_2024_filtered_all[subjects_all].apply(lambda x: x.strip() if isinstance(x, str) else x), errors='coerce').fillna(
-        0).astype(int)
-
-    for year in year_group:
-        data_2023_filtered_all['Grade'] = convert_to_grades(data_2023_filtered_all[subjects_all],
-                                                        grade_boundaries_2023[year][subjects_all])
-        data_2024_filtered_all['Grade'] = convert_to_grades(data_2024_filtered_all[subjects_all],
-                                                        grade_boundaries_2024[year][subjects_all])
-
-    # Merge data for comparison
-    comparison_data = pd.merge(data_2023_filtered_all, data_2024_filtered_all, on=['Student', 'Year'],
-                               suffixes=('_2023', '_2024'))
-
-    grade_to_value = {'A*': 8, 'A': 7, 'B': 6, 'C': 5, 'D': 4, 'E': 3, 'F': 2, 'G': 1, 'U': 0, '9': 9, '8': 8, '7': 7,
-                      '6': 6,
-                      '5': 5, '4': 4, '3': 3, '2': 2, '1': 1, '0': 0, 'N/A': 'N/A'}
-
-    # Comparison result
+    # Define a function to compare grades and add the appropriate label
     def compare_grades(grade_2023, grade_2024):
+        grade_order = ['U', '2', '3', '4', '5', '6', '7', '8', '9', 'F', 'E', 'D', 'C', 'B', 'A', 'A*']
 
-        if grade_to_value[grade_2023] == 'N/A' or grade_to_value[grade_2024] == 'N/A':
+        if grade_2023 == 'N/A' or grade_2024 == 'N/A':
             return 'N/A'
 
-        elif grade_to_value[grade_2023] < grade_to_value[grade_2024]:
-            return 'Above'
+        index_2023 = grade_order.index(grade_2023)
+        index_2024 = grade_order.index(grade_2024)
 
-        elif grade_to_value[grade_2023] == grade_to_value[grade_2024]:
-            if grade_2023 == 'A*' and grade_2024 == 'A*' or grade_2023 == '9' and grade_2024 == '9':
-                return 'Above'
-            else:
-                return 'Expected'
+        if index_2024 > index_2023:
+            return 'Above'
+        elif index_2024 == 15 and index_2023 == 15:
+            return 'Above'
+        elif index_2024 == index_2023:
+            return 'Expected'
         else:
             return 'Below'
 
-    comparison_data['Comparison'] = comparison_data.apply(
-        lambda row: compare_grades(row['Grade_2023'], row['Grade_2024']),
-        axis=1)
+    # Add a comparison column to the dataframes
+    comparison_results = []
 
-    def calculate_group_percentages(data, year_groups):
-        grouped_data = data[data['Year'].isin(year_groups)]
-        comparison_counts = grouped_data['Comparison'].value_counts()
-        filter_data = grouped_data[grouped_data['Comparison'] != 'N/A']
-        total_comparisons = len(filter_data)
-        above_count = comparison_counts.get('Above', 0)
-        expected_count = comparison_counts.get('Expected', 0)
-        below_count = comparison_counts.get('Below', 0)
+    for i, row in data_2023.iterrows():
+        student_2023 = row['Student']
+        grade_2023 = row['Grade']
+        student_row_2024 = data_2024[data_2024['Student'] == student_2023]
+        if not student_row_2024.empty:
+            grade_2024 = student_row_2024.iloc[0]['Grade']
+            comparison = compare_grades(grade_2023, grade_2024)
+        else:
+            comparison = 'N/A'
+        comparison_results.append({
+            'Student': student_2023,
+            'Grade 2023': grade_2023,
+            'Grade 2024': grade_2024 if not student_row_2024.empty else 'N/A',
+            'Comparison': comparison
+        })
 
-        above_percentage = (above_count / total_comparisons) * 100
-        expected_percentage = (expected_count / total_comparisons) * 100
-        below_percentage = (below_count / total_comparisons) * 100
+    comparison_df = pd.DataFrame(comparison_results)
+    # Calculate the percentage of Above, Expected, and Below comparisons
 
-        return above_percentage, expected_percentage, below_percentage
+    # Add a year group to the comparison DataFrame for better analysis
+    comparison_df['Year Group'] = data_2023['Year']
 
-    year_groups_1_to_6 = ['Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6']
-    year_groups_7_to_11 = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11']
-    year_groups_12_to_13 = ['Year 12', 'Year 13']
+    # Calculate the percentage of Above, Expected, and Below comparisons for each year group
+    comparison_counts_excluding_na = comparison_df[comparison_df['Comparison'] != 'N/A'].groupby(
+        ['Year Group', 'Comparison']).size().unstack(fill_value=0)
+    comparison_counts_excluding_na = (comparison_counts_excluding_na.div
+                                      (comparison_counts_excluding_na.sum(axis=1),axis=0) * 100).__round__(0)
 
-    above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6 = calculate_group_percentages(
-        comparison_data, year_groups_1_to_6)
-    above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11 = calculate_group_percentages(
-        comparison_data, year_groups_7_to_11)
-    above_percentage_12_to_13, expected_percentage_12_to_13, below_percentage_12_to_13 = calculate_group_percentages(
-        comparison_data, year_groups_12_to_13)
+    def determine_result(row):
+        above = row['Above']
+        expected = row['Expected']
 
-    # Display results
+        if above >= 74.5 and (above + expected) >= 75:
+            return 'OUTSTANDING'
+        elif above < 75 and above > 60 and (above + expected) >= 74.5:
+            return 'VeryGOOD'
+        elif above < 61 and above > 50 and (above + expected) >= 74.5:
+            return 'GOOD'
+        elif above < 51 and above > 16 and (above + expected) >= 74.5:
+            return 'Acceptable'
+        elif above < 65 and above > 16 and (above + expected) < 74.5:
+            return 'Weak'
+        elif above < 16 and above > 0 and (above + expected) < 74.5:
+            return 'VeryWeak'
+        else:
+            return 'N/A'
 
+    # Apply the function to the dataframe
+    comparison_counts_excluding_na['Result'] = comparison_counts_excluding_na.apply(determine_result, axis=1)
 
-    def display_comparison_results(g_above_percentage, g_expected_percentage, g_below_percentage, year_range):
-        Above_Expected = g_above_percentage + g_expected_percentage
-        result = ""
-        result_color = ""
-        text_color = "black"
-        if g_above_percentage >= 75 and Above_Expected >= 75:
-            result = "OUTSTANDING"
-            result_color = "royalblue"
-        elif 75 > g_above_percentage >= 61 and Above_Expected >= 75:
-            result = "VERY GOOD"
-            result_color = "darkgreen"
-        elif 61 > g_above_percentage >= 50 and Above_Expected >= 75:
-            result = "GOOD"
-            result_color = "green"
-        elif 51 >= g_above_percentage >= 1 and Above_Expected >= 75:
-            result = "ACCEPTABLE"
-            result_color = "yellow"
-        elif 60 >= g_above_percentage >= 15 and Above_Expected < 75:
-            result = "WEAK"
-            result_color = "lightpink"
-        elif g_above_percentage < 15 and Above_Expected < 75:
-            result = "VERY WEAK"
-            result_color = "magenta"
-        html_group = f"""
-            <table style='width:25%; font-size:20px;margin-left: auto;margin-right: auto;'>
-            <tr>
-            <th 
-            style='width:150px;background-color:lightblue;color:black;border:1px solid black;'>{year_range}</td>
-            <th 
-            style='width:150px;background-color:{result_color};color:{text_color};border:1px solid black;'>{result}</td>
-            </tr>
+    def categorize_year_group(year_group):
+        primary_years = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6']
+        secondary_years = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11']
+        post16_years = ['Year 12', 'Year 13']
 
-            """
+        if year_group in primary_years:
+            return 'Primary'
+        elif year_group in secondary_years:
+            return 'Secondary'
+        elif year_group in post16_years:
+            return 'POST16'
+        else:
+            return 'Unknown'
 
-        st.markdown(f"{html_group}</table>", unsafe_allow_html=True)
+    comparison_counts_excluding_na['Category'] = comparison_counts_excluding_na.index.map(categorize_year_group)
 
-    display_comparison_results(above_percentage_1_to_6, expected_percentage_1_to_6, below_percentage_1_to_6, "Primary")
-    display_comparison_results(above_percentage_7_to_11, expected_percentage_7_to_11, below_percentage_7_to_11,
-                               "Secondary")
-    display_comparison_results(above_percentage_12_to_13, expected_percentage_12_to_13, below_percentage_12_to_13,
-                               "POST 16")
+    # Aggregate the results by category
+    category_summary = comparison_counts_excluding_na.groupby('Category').agg({
+        'Above': 'mean',
+        'Below': 'mean',
+        'Expected': 'mean',
+        'Result': 'first'  # This will not work correctly, we need a custom function for correct aggregation of results
+    })
+
+    # Define a custom function to determine the aggregated result for each category
+    def aggregate_results(df):
+        above = df['Above'].mean()
+        expected = df['Expected'].mean()
+
+        if above >= 74.5 and (above + expected) >= 74.5:
+            return 'OUTSTANDING'
+        elif above < 75 and above > 60 and (above + expected) >= 74.5:
+            return 'VeryGOOD'
+        elif above < 60 and above > 50 and (above + expected) >= 74.5:
+            return 'GOOD'
+        elif above < 50 and above > 16 and (above + expected) >= 74.5:
+            return 'Acceptable'
+        elif above < 60 and above > 16 and (above + expected) < 74.5:
+            return 'Weak'
+        elif above < 16 and above > 0 and (above + expected) < 74.5:
+            return 'VeryWeak'
+        else:
+            return 'N/A'
+
+    # Apply the custom aggregation function
+    category_summary['Result'] = comparison_counts_excluding_na.groupby('Category').apply(aggregate_results)
+    in_html = category_summary.to_html()
+    st.markdown(in_html, unsafe_allow_html=True)
