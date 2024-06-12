@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 
 
-
 # Set page Title
 
 def alldata():
@@ -43,6 +42,7 @@ def alldata():
         'Year 13': {'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
     }
+
     # Function to apply the grade boundaries to the data
     def apply_grade_boundaries(year, subject, marks, grade_boundaries):
         boundaries = grade_boundaries.get(year, {}).get(subject, {})
@@ -105,7 +105,7 @@ def alldata():
     comparison_counts_excluding_na = comparison_df[comparison_df['Comparison'] != 'N/A'].groupby(
         ['Year Group', 'Comparison']).size().unstack(fill_value=0)
     comparison_counts_excluding_na = (comparison_counts_excluding_na.div
-                                      (comparison_counts_excluding_na.sum(axis=1),axis=0) * 100).__round__(0)
+                                      (comparison_counts_excluding_na.sum(axis=1), axis=0) * 100).__round__(0)
 
     def determine_result(row):
         above = row['Above']

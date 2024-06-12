@@ -8,7 +8,8 @@ from pages import Mathall
 # Set page Title
 
 def show():
-    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS MATHEMATICS (2023 JUNE - 2024 JUNE).</h1></br>"""
+    html_header = f"""<h1 style="text-align: center; color: royalblue">PROGRESS ANAYLSIS MATHEMATICS (2023 JUNE - 
+    2024 JUNE).</h1></br>"""
     # You can add more Streamlit elements below
     st.markdown(html_header, unsafe_allow_html=True)
 
@@ -67,14 +68,14 @@ def show():
         lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2024), axis=1)
 
     # Define a function to compare grades and add the appropriate label
-    def compare_grades(grade_2023, grade_2024):
+    def compare_grades(grade2023, grade2024):
         grade_order = ['U', '2', '3', '4', '5', '6', '7', '8', '9', 'F', 'E', 'D', 'C', 'B', 'A', 'A*']
 
-        if grade_2023 == 'N/A' or grade_2024 == 'N/A':
+        if grade2023 == 'N/A' or grade2024 == 'N/A':
             return 'N/A'
 
-        index_2023 = grade_order.index(grade_2023)
-        index_2024 = grade_order.index(grade_2024)
+        index_2023 = grade_order.index(grade2023)
+        index_2024 = grade_order.index(grade2024)
         if index_2024 > index_2023:
             return 'Above'
         elif index_2024 == 15 and index_2023 == 15:
@@ -124,21 +125,23 @@ def show():
         if above >= 74.5 and (above + expected) >= 75:
             return 'OUTSTANDING'
         elif above < 75 and above > 60 and (above + expected) >= 74.5:
-            return 'VeryGOOD'
+            return 'VERYGOOD'
         elif above < 61 and above > 50 and (above + expected) >= 74.5:
             return 'GOOD'
         elif above < 51 and above > 16 and (above + expected) >= 74.5:
-            return 'Acceptable'
+            return 'ACCEPTABLE'
         elif above < 65 and above > 16 and (above + expected) < 74.5:
-            return 'Weak'
+            return 'WEAK'
         elif above < 16 and above > 0 and (above + expected) < 74.5:
-            return 'VeryWeak'
+            return 'VERYWEAK'
         else:
             return 'N/A'
 
     # Apply the function to the dataframe
     comparison_counts_excluding_na['Result'] = comparison_counts_excluding_na.apply(determine_result, axis=1)
-
+    comparison_counts_excluding_na['Above'] = comparison_counts_excluding_na['Above'].round().astype(int)
+    comparison_counts_excluding_na['Expected'] = comparison_counts_excluding_na['Expected'].round().astype(int)
+    comparison_counts_excluding_na['Below'] = comparison_counts_excluding_na['Below'].round().astype(int)
     # Display the comparison results
 
     # Display All Data
@@ -168,6 +171,35 @@ def show():
     # # Inject the HTML string into the Streamlit app
     # st.markdown(html_table, unsafe_allow_html=True)
     # # Inject the HTML string into the Streamlit app
-
-    to_html = comparison_counts_excluding_na.to_html()
-    st.markdown(to_html, unsafe_allow_html=True)
+    table_style = """
+    <style>
+        .dataframe {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+            text-align: left;
+        }
+        .dataframe th, .dataframe td {
+            padding: 12px 15px;
+        }
+        .dataframe th {
+            background-color: brown;
+            color: #ffffff;
+            text-align: center;
+        }
+        .dataframe tr {
+            border-bottom: 1px solid #dddddd;
+            background-color: brown;
+        }
+        .dataframe tr:nth-of-type(even) {
+            background-color: brown;
+        }
+        .dataframe tr:last-of-type {
+            border-bottom: 2px solid #009879;
+            background-color: brown;
+        }
+    </style>
+    """
+    to_html = comparison_counts_excluding_na.to_html(index=True, classes='dataframe')
+    st.markdown(table_style + to_html, unsafe_allow_html=True)
