@@ -168,5 +168,6 @@ def show():
     # # Inject the HTML string into the Streamlit app
     # st.markdown(html_table, unsafe_allow_html=True)
     # # Inject the HTML string into the Streamlit app
+
     to_html = comparison_counts_excluding_na.to_html()
     st.markdown(to_html, unsafe_allow_html=True)
