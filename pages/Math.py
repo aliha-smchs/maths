@@ -15,44 +15,119 @@ def show():
 
     # Load data files
     # Load the data
-    file_2023 = 'data/Math2023.csv'
-    file_2024 = 'data/Math2024OLD.csv'
+    file_2023 = 'data/Science2023.csv'
+    file_2024 = 'data/Progress_2024_GL_SCI.csv'
 
     # Read the CSV files
     data_2023 = pd.read_csv(file_2023)
     data_2024 = pd.read_csv(file_2024)
+    # Fixed grade boundaries for 2023 for each subject and year group
     grade_boundaries_2023 = {
-        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
+        'Year 2': {
+            'Science': {'A*': 85, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
 
+        },
+        'Year 3': {
+            'Science': {'A*': 85, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+
+        },
+        'Year 4': {
+            'Science': {'A*': 85, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+
+        },
+        'Year 5': {
+            'Science': {'A*': 85, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+
+        },
+        'Year 6': {
+            'Science': {'A*': 85, 'A': 80, 'B': 70, 'C': 60, 'D': 50, 'E': 40, 'U': 0},
+
+        },
+        'Year 7': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 8': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 9': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 10': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 11': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 12': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 13': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        # Add more years as needed
     }
 
+    # Default grade boundaries for 2024 (customizable)
     grade_boundaries_2024 = {
-        'Year 2': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 3': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 4': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 5': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 6': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 7': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 8': {'Mathematic': {'A*': 80, 'A': 75, 'B': 65, 'C': 50, 'D': 40, 'E': 36, 'F': 30, 'U': 0}},
-        'Year 9': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 10': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 11': {'Mathematic': {'9': 80, '8': 75, '7': 65, '6': 50, '5': 40, '4': 36, '3': 30, '2': 0}},
-        'Year 12': {'Mathematic': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
-        'Year 13': {'Mathematic': {'A*': 85, 'A': 75, 'B': 60, 'C': 55, 'D': 50, 'E': 40, 'U': 0}},
 
+        'Year 2': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 3': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 4': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 5': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 6': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 7': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 8': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 9': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 10': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 11': {
+            'Science': {'9': 85, '8': 80, '7': 75, '6': 60, '5': 50, '4': 40, '3': 30, '2': 0},
+
+        },
+        'Year 12': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        'Year 13': {
+            'Science': {'A*': 85, 'A': 75, 'B': 65, 'C': 55, 'D': 45, 'E': 40, 'U': 0},
+
+        },
+        # Add more years as needed
     }
-
     # Function to apply the grade boundaries to the data
     def apply_grade_boundaries(year, subject, marks, grade_boundaries):
         boundaries = grade_boundaries.get(year, {}).get(subject, {})
@@ -63,13 +138,13 @@ def show():
 
     # Apply the custom grade boundaries to both datasets
     data_2023['Grade'] = data_2023.apply(
-        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2023), axis=1)
+        lambda row: apply_grade_boundaries(row['Year'], 'Science', row['Science'], grade_boundaries_2023), axis=1)
     data_2024['Grade'] = data_2024.apply(
-        lambda row: apply_grade_boundaries(row['Year'], 'Mathematic', row['Mathematic'], grade_boundaries_2024), axis=1)
+        lambda row: apply_grade_boundaries(row['Year'], 'Science', row['Science'], grade_boundaries_2024), axis=1)
 
     # Define a function to compare grades and add the appropriate label
     def compare_grades(grade2023, grade2024):
-        grade_order = ['U', '2', '3', '4', '5', '6', '7', '8', '9', 'F', 'E', 'D', 'C', 'B', 'A', 'A*']
+        grade_order = ['U', '2', '3', '4', '5', '6', '7', '8', '9','G', 'F', 'E', 'D', 'C', 'B', 'A', 'A*']
 
         if grade2023 == 'N/A' or grade2024 == 'N/A':
             return 'N/A'
@@ -78,7 +153,7 @@ def show():
         index_2024 = grade_order.index(grade2024)
         if index_2024 > index_2023:
             return 'Above'
-        elif index_2024 == 15 and index_2023 == 15:
+        elif index_2024 == 16 and index_2023 == 16:
             return 'Above'
         elif index_2024 == index_2023:
             return 'Expected'
@@ -171,35 +246,6 @@ def show():
     # # Inject the HTML string into the Streamlit app
     # st.markdown(html_table, unsafe_allow_html=True)
     # # Inject the HTML string into the Streamlit app
-    table_style = """
-    <style>
-        .dataframe {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 1.2em;
-            text-align: left;
-        }
-        .dataframe th, .dataframe td {
-            padding: 12px 15px;
-        }
-        .dataframe th {
-            background-color: brown;
-            color: #ffffff;
-            text-align: center;
-        }
-        .dataframe tr {
-            border-bottom: 1px solid #dddddd;
-            background-color: brown;
-        }
-        .dataframe tr:nth-of-type(even) {
-            background-color: brown;
-        }
-        .dataframe tr:last-of-type {
-            border-bottom: 2px solid #009879;
-            background-color: brown;
-        }
-    </style>
-    """
+
     to_html = comparison_counts_excluding_na.to_html(index=True, classes='dataframe')
-    st.markdown(table_style + to_html, unsafe_allow_html=True)
+    st.markdown(to_html, unsafe_allow_html=True)
